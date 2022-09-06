@@ -34,7 +34,7 @@ trait SparkSpec extends BaseSpec with StrictLogging with BeforeAndAfterAll {
       .config("spark.sql.shuffle.partitions", 20)
       .config("spark.default.parallelism", 20)
       .appName("spark application")
-      .master("local[*]")
+      .master("local[*]") // 如果无法bind local，使用 `hostname` ，在`/etc/hosts`中将 hostname 配置到127.0.0.1
       .getOrCreate()
   }
 }
