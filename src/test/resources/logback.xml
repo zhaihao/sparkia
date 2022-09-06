@@ -43,22 +43,9 @@
     </appender>
 
     <logger name="me.ooon" level="INFO"/>
-    <logger name="org.apache.spark.sql.syntax" level="INFO"/>
-    <logger name="org.apache.spark.ml" level="INFO"/>
-    <logger name="org.apache.spark.mllib" level="INFO"/>
 
-    <logger name="slick.jdbc.JdbcBackend.statement" level="INFO"/>
-    <logger name="slick.jdbc.JdbcBackend.parameter" level="INFO"/>
-    <logger name="slick.jdbc.JdbcBackend.benchmark" level="INFO"/>
-    <logger name="slick.jdbc.StatementInvoker" level="INFO"/>
-    <!--<logger name="slick.basic.BasicBackend.stream" level="DEBUG"/>-->
-
-    <logger name="com.zaxxer.hikari.pool.HikariPool" level="INFO"/>
-
-    <root level="WARN">
-        <!--<appender-ref ref="ASYNC_STDOUT"/>-->
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
     </root>
 
 </configuration>
