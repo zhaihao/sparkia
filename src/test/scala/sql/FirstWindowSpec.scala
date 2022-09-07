@@ -41,47 +41,63 @@ class FirstWindowSpec extends SparkSpec {
    */
   "无法实现 first 与 group 一起用" in {
     assertThrows[AnalysisException] {
-      //language=SQL
-      spark.sql("""
-                  |SELECT
-                  | first(first(`TIME`) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ))   AS first_time,
-                  | ts,
-                  | id,
-                  | first(FIRST(`score`) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ))   AS first_score
-                  |FROM test
-                  | GROUP BY ts,id
-                  |""".stripMargin).show()
+      // language=SQL
+      spark
+        .sql("""
+               |SELECT
+               | first(first(`TIME`) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ))   AS first_time,
+               | ts,
+               | id,
+               | first(FIRST(`score`) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ))   AS first_score
+               |FROM test
+               | GROUP BY ts,id
+               |""".stripMargin)
+        .show()
     }
 
     assertThrows[AnalysisException] {
-      spark.sql("""
-                  |select
-                  | FIRST(TIME) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING )  AS first_time,
-                  | ts,
-                  | id,
-                  | FIRST(score) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING )   AS first_score
-                  |from test
-                  | group by ts,id,first_time,first_score
-                  |""".stripMargin).show()
+      spark
+        .sql("""
+               |select
+               | FIRST(TIME) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING )  AS first_time,
+               | ts,
+               | id,
+               | FIRST(score) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING )   AS first_score
+               |from test
+               | group by ts,id,first_time,first_score
+               |""".stripMargin)
+        .show()
     }
   }
 
   "子查询实现" in {
-    //language=SQL
-    spark.sql("""
-                |SELECT
-                | t.ts,
-                | t.id,
-                | first(t.first_time),
-                | first(t.first_score)
-                |FROM
-                |   (SELECT
-                |     first(`TIME`) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ) AS first_time,
-                |     ts,
-                |     id,
-                |     first(score) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ) AS first_score
-                |   FROM test) t
-                |GROUP BY t.ts, t.id
-                |""".stripMargin).show()
+    // language=SQL
+    val r = spark.sql(
+      """
+        |SELECT
+        | t.ts,
+        | t.id,
+        | first(t.first_time),
+        | first(t.first_score)
+        |FROM
+        |   (SELECT
+        |     first(`TIME`) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ) AS first_time,
+        |     ts,
+        |     id,
+        |     first(score) OVER ( PARTITION BY ID,ts ORDER BY `TIME` ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING ) AS first_score
+        |   FROM test) t
+        |GROUP BY t.ts, t.id
+        |""".stripMargin
+    )
+    r.show()
+    r.string ==> """|+-------------------+---+-------------------+------------------+
+                    ||                 ts| id|  first(first_time)|first(first_score)|
+                    |+-------------------+---+-------------------+------------------+
+                    ||2020-05-06 23:10:00|  1|2020-05-06 23:10:01|                23|
+                    ||2020-05-06 23:10:00|  2|2020-05-06 23:10:01|                12|
+                    ||2020-05-06 23:11:00|  1|2020-05-06 23:11:01|               231|
+                    ||2020-05-06 23:11:00|  2|2020-05-06 23:11:01|               121|
+                    |+-------------------+---+-------------------+------------------+
+                    |""".stripMargin
   }
 }

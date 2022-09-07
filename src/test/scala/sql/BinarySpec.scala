@@ -21,7 +21,7 @@ class BinarySpec extends SparkSpec {
    * impala 不支持 binary 类型，建议做base64处理
    */
   "binary" in {
-    //language=SQL
+    // language=SQL
     spark
       .sql("""
              |select base64('hello'), base64('Hello')
@@ -37,11 +37,19 @@ class BinarySpec extends SparkSpec {
     df.show()
     df.createOrReplaceTempView("tt")
 
-    //language=SQL
-    spark
+    // language=SQL
+    val r = spark
       .sql("""
              |select base64(a) from tt
              |""".stripMargin)
-      .show()
+    r.show()
+    r.string ==> """|+---------+
+                    ||base64(a)|
+                    |+---------+
+                    || aGVsbG8=|
+                    || SGVsbG8=|
+                    ||     null|
+                    |+---------+
+                    |""".stripMargin
   }
 }
