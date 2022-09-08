@@ -7,8 +7,6 @@
 
 package org.apache.spark.sql
 
-import com.typesafe.scalalogging.{Logger, StrictLogging}
-
 import scala.language.implicitConversions
 
 /**
