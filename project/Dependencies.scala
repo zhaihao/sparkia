@@ -43,8 +43,8 @@ object Dependencies extends AutoPlugin {
     )
 
     lazy val SPARK = Seq(
-      "org.apache.spark" %% "spark-core" % "3.4.0",
-      "org.apache.spark" %% "spark-sql"  % "3.4.0"
+      "org.apache.spark" %% "spark-core" % "3.4.1",
+      "org.apache.spark" %% "spark-sql"  % "3.4.1"
     )
 
     lazy val overrides = Seq(
