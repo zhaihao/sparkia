@@ -1,4 +1,4 @@
-scalaVersion := "2.13.14"
+scalaVersion := "2.13.15"
 name         := "sparkia"
 organization := "me.ooon"
 
