@@ -48,7 +48,7 @@ object Dependencies extends AutoPlugin {
     )
 
     lazy val overrides = Seq(
-      "org.scala-lang.modules" %% "scala-xml" % "2.3.0"
+      "org.scala-lang.modules" %% "scala-xml" % "2.4.0"
     )
 
     lazy val excludes = Seq(
