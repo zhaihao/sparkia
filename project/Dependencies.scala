@@ -52,8 +52,9 @@ object Dependencies extends AutoPlugin {
     )
 
     lazy val excludes = Seq(
-      "org.slf4j" % "slf4j-log4j12",
-      "log4j"     % "log4j"
+      "org.slf4j"                % "slf4j-log4j12",
+      "log4j"                    % "log4j",
+      "org.apache.logging.log4j" % "log4j-slf4j2-impl"
     )
   }
 }
