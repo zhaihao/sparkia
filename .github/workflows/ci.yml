@@ -27,6 +27,9 @@ jobs:
           distribution: 'zulu'
           cache: 'sbt'
 
+      - name: Set up sbt
+        uses: sbt/setup-sbt@v1
+
       - name: Run tests
         run: sbt test
         env:
