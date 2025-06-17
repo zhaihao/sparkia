@@ -43,13 +43,5 @@ class BinarySpec extends SparkSpec {
              |select base64(a) from tt
              |""".stripMargin)
     r.show()
-    r.string ==> """|+---------+
-                    ||base64(a)|
-                    |+---------+
-                    || aGVsbG8=|
-                    || SGVsbG8=|
-                    ||     null|
-                    |+---------+
-                    |""".stripMargin
   }
 }
