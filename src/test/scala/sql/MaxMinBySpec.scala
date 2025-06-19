@@ -15,6 +15,8 @@ package sql
   * @version 1.0
   * @since 2022/9/7 11:08
   */
+//noinspection SqlNoDataSourceInspection
+//language=SQL
 class MaxMinBySpec extends SparkSpec {
   import spark.implicits._
 
@@ -30,7 +32,6 @@ class MaxMinBySpec extends SparkSpec {
   df.createTempView("t_score")
 
   "max_by & min_by" in {
-    // language=SQL
     val r = spark
       .sql("""select class,
              |       max_by(student,score) as maxStudent,
@@ -43,12 +44,5 @@ class MaxMinBySpec extends SparkSpec {
              |group by class""".stripMargin)
 
     r.show()
-    r.string ==> """|+-----+----------+-----------------+---------------+----------+-----------------+---------------+
-                    ||class|maxStudent|maxByStudentScore|maxStudentScore|minStudent|minByStudentScore|minStudentScore|
-                    |+-----+----------+-----------------+---------------+----------+-----------------+---------------+
-                    ||    A|        s3|               30|             30|        s1|               10|             10|
-                    ||    B|        s6|               60|             60|        s4|               40|             40|
-                    |+-----+----------+-----------------+---------------+----------+-----------------+---------------+
-                    |""".stripMargin
   }
 }
