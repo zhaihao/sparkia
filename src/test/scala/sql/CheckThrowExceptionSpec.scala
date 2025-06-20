@@ -9,7 +9,7 @@ package me.ooon.sparkia
 package sql
 
 import com.typesafe.scalalogging.StrictLogging
-import org.apache.spark.SparkException
+import org.apache.spark.{SparkException, SparkThrowable}
 //noinspection SqlNoDataSourceInspection
 //language=SQL
 class CheckThrowExceptionSpec extends SparkSpec with StrictLogging {
@@ -20,12 +20,12 @@ class CheckThrowExceptionSpec extends SparkSpec with StrictLogging {
     (2, 2)
   ).toDF("c1", "c2")
   df.show()
-  df.createOrReplaceTempView("test")
+  df.createOrReplaceTempView("t_test")
 
   // 必须 show 才会报错
 
   "高版本内置函数" in {
-    assertThrows[SparkException] {
+    assertThrows[SparkThrowable] {
       spark.sql("select RAISE_ERROR('error!')").show()
     }
 
@@ -35,16 +35,16 @@ class CheckThrowExceptionSpec extends SparkSpec with StrictLogging {
   "低版本" in {
     spark
       .sql("""
-             |select assert_true((select count(1) as cnt from test) > 1) as check;
+             |select assert_true((select count(1) as cnt from t_test) > 1) as check;
              |
              |""".stripMargin)
       .show()
 
-    assertThrows[SparkException] {
+    assertThrows[SparkThrowable] {
       spark
         .sql("""
                |
-               |select assert_true((select count(1) as cnt from test) > 10) as check;
+               |select assert_true((select count(1) as cnt from t_test) > 10) as check;
                |
                |""".stripMargin)
         .show()

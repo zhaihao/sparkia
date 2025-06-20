@@ -7,6 +7,8 @@
 
 package org.apache.spark.sql
 
+import org.apache.spark.sql.classic.ClassicConversions.castToImpl
+
 import scala.language.implicitConversions
 
 /**
