@@ -17,6 +17,8 @@ import org.apache.spark.sql.types.StringType
   * @version 1.0
   * @since 2022/9/8 11:13
   */
+//noinspection SqlNoDataSourceInspection
+//language=SQL
 class JsonOpsSpec extends SparkSpec {
   import spark.implicits._
   "从json中获取一个字段" in {
@@ -26,7 +28,6 @@ class JsonOpsSpec extends SparkSpec {
     ).toDF("c1", "c2")
     df.show()
     df.createOrReplaceTempView("test")
-    // language=SQL
     val r = spark.sql("select c1,get_json_object(c2,'$.a') as f1, get_json_object(c2,'$.b') as f2 from test")
     r.show()
     // 全部当作 string

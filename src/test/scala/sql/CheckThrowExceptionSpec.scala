@@ -6,11 +6,12 @@
  */
 
 package me.ooon.sparkia
+package sql
 
 import com.typesafe.scalalogging.StrictLogging
 //noinspection SqlNoDataSourceInspection
 //language=SQL
-class SQLCheckThrowExceptionSpec extends SparkSpec with StrictLogging {
+class CheckThrowExceptionSpec extends SparkSpec with StrictLogging {
   import spark.implicits._
   "test" in {
     val df = Seq(

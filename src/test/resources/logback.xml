@@ -43,6 +43,7 @@
     </appender>
 
     <logger name="me.ooon" level="info"/>
+    <logger name="me.ooon.sparkia" level="trace"/>
     <logger name="org.apache.spark.ui.SparkUI" level="info"/>
     <logger name="org.apache.spark.util.Utils" level="info"/>
 

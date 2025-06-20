@@ -15,13 +15,14 @@ package sql
   * @version 1.0
   * @since 2022/9/7 11:04
   */
+//noinspection SqlNoDataSourceInspection
+//language=SQL
 class BinarySpec extends SparkSpec {
 
   /**
    * impala 不支持 binary 类型，建议做base64处理
    */
   "binary" in {
-    // language=SQL
     spark
       .sql("""
              |select base64('hello'), base64('Hello')
@@ -37,7 +38,6 @@ class BinarySpec extends SparkSpec {
     df.show()
     df.createOrReplaceTempView("tt")
 
-    // language=SQL
     val r = spark
       .sql("""
              |select base64(a) from tt

@@ -17,6 +17,8 @@ package sql
   * @version 1.0
   * @since 2022/9/6 17:36
   */
+//noinspection SqlNoDataSourceInspection
+//language=SQL
 class FirstWindowSpec extends SparkSpec {
 
   import org.apache.spark.sql.AnalysisException
@@ -41,7 +43,6 @@ class FirstWindowSpec extends SparkSpec {
    */
   "无法实现 first 与 group 一起用" in {
     assertThrows[AnalysisException] {
-      // language=SQL
       spark
         .sql("""
                |SELECT
@@ -71,7 +72,6 @@ class FirstWindowSpec extends SparkSpec {
   }
 
   "子查询实现" in {
-    // language=SQL
     val r = spark.sql(
       """
         |SELECT
