@@ -30,7 +30,7 @@ object Dependencies extends AutoPlugin {
     lazy val LOG = Seq(
       "org.slf4j"                   % "log4j-over-slf4j" % "2.0.17",
       "com.typesafe.scala-logging" %% "scala-logging"    % "3.9.6",
-      "ch.qos.logback"              % "logback-classic"  % "1.5.22"
+      "ch.qos.logback"              % "logback-classic"  % "1.5.23"
     )
 
     lazy val SCALA_TEST = Seq(
