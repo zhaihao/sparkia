@@ -23,7 +23,7 @@ object Dependencies extends AutoPlugin {
     lazy val NSCALA          = "com.github.nscala-time" %% "nscala-time"                % "3.0.0"
     lazy val OS_LIB          = "com.lihaoyi"            %% "os-lib"                     % "0.11.8"
     lazy val SQUANTS         = "org.typelevel"          %% "squants"                    % "1.7.4"
-    lazy val TYPESAFE_CONFIG = "com.typesafe"            % "config"                     % "1.4.5"
+    lazy val TYPESAFE_CONFIG = "com.typesafe"            % "config"                     % "1.4.6"
     lazy val PLAY_JSON       = "org.playframework"      %% "play-json"                  % "3.0.6"
     lazy val PAR             = "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4"
 
